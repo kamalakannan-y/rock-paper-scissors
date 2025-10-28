@@ -8,73 +8,81 @@
 <body>
     <script>
 
-        let humanScore = 0;
-        let computerScore = 0;
-
         function getComputerChoice() {
             let random = Math.floor(Math.random() * 3);
-            let choice;
             if (random == 0) {
-                choice = "rock";
+                return "rock";
             }
             else if (random == 1) {
-                choice = "paper";
+                return "paper";
             }
             else {
-                choice = "scissors";
+                return "scissors";
             }
-            return choice;
         }
 
         function getHumanChoice() {
-            let input = prompt("PICK: ");
-            let pick;
-
+            let input = prompt("PICK: ").toLowerCase();
             if (input == "rock") {
-                pick = "rock";
+                return "rock";
             }
             else if (input == "paper") {
-                pick = "paper";
+                return "paper";
             }
             else if (input == "scissors") {
-                pick = "scissors";
+                return "scissors";
             }
             else {
                 console.log("Invalid");
             }
-            return pick;
         }
 
         function playRound(humanChoice, computerChoice) {
             if (humanChoice === computerChoice) {
                 console.log("Draw");
+                return "draw";
             } else if (
                 (humanChoice === "rock" && computerChoice === "scissors") ||
                 (humanChoice === "paper" && computerChoice === "rock") ||
                 (humanChoice === "scissors" && computerChoice === "paper")
             ) {
                 console.log("You Win");
-                return humanScore++;
-            } else if (
-                (computerChoice === "rock" && humanChoice === "scissors") ||
-                (computerChoice === "paper" && humanChoice === "rock") ||
-                (computerChoice === "scissors" && humanChoice === "paper")
-            ) {
-                console.log("You lose");
-                return computerScore++;
+                return "win";
             } else {
-                console.log("Invalid input!");
+                console.log("You lose");
+                return "lose";
+            } 
+        }
+        
+        let humanScore = 0;
+        let computerScore = 0;
+
+        function playGame() {
+            for (let i = 1; i <=5; i++) {
+                const humanSelection = getHumanChoice();
+                const computerSelection = getComputerChoice();
+                const result = playRound(humanSelection, computerSelection); 
+                if (result === "win") {
+                    humanScore++;
+                } 
+                else if (result === "lose") {
+                    computerScore++;
+                }
+                console.log("You: " + humanScore + " " + "Computer: " + computerScore)            
+            }
+            if (humanScore > computerScore) {
+                console.log("You won the game by " + humanScore + "-" + computerScore)
+            }
+            else if (computerScore > humanScore) {
+                 console.log("You lost the game by " + humanScore + "-" + computerScore)               
+            }
+            else {
+                console.log("It is a Tie! " + humanScore + "-" + computerScore)
             }
         }
- 
 
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
+        playGame();
 
-        playRound(humanSelection, computerSelection);
-
-        console.log(humanScore)
-        console.log(computerScore)
         
     </script>
 </body>
